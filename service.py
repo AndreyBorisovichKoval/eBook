@@ -4,7 +4,9 @@ import utils
 
 
 def create_user(_user: Users):
-    Users.password = utils.hash_string(Users.password)
+    print('St')
+    _user.password = utils.hash_string(_user.password)
+    print('En')
     return repository.create_user(_user)
 
 
