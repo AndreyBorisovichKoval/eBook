@@ -123,4 +123,20 @@ class Staff(Base):
     is_deleted = Column(Boolean, nullable=False, default=False)
 
 
+class Users(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    full_name = Column(String(length=100), nullable=False)
+    user_name = Column(String(length=100), unique=True, nullable=False)
+    password = Column(String(length=255), nullable=False)
+    email = Column(String(length=100), nullable=False)
+    users_access_level = Column(Integer, nullable=False)
+    staff_id = Column(Integer, ForeignKey("staff.id"), nullable=False)
+    staff = relationship("Staff", backref="users")
+
+    def __repr__(self):
+        return f"<User(id={self.id}, username={self.username}, email={self.email})>"
+
+
 Base.metadata.create_all(bind=engine)

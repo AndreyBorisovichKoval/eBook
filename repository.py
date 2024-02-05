@@ -1,8 +1,8 @@
 from sqlalchemy import and_, update
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import sessionmaker, joinedload
 from connection import engine
-from models import Books, Authors, Genres, Readers, BorrowedBooks, BooksGenres, BooksAuthors, Orders, OrderItems, Staff
+from models import Users, Books, Authors, Genres, Readers, BorrowedBooks, BooksGenres, BooksAuthors, Orders, OrderItems, Staff
 from datetime import datetime
 
 Session = sessionmaker(autoflush=False, bind=engine)
@@ -540,3 +540,37 @@ def delete_staff(_id):
         else:
             return {"error": "Работник не найден"}
 
+
+# ===================================================================================
+
+
+def create_user(_user):
+    try:
+        with Session(autoflush=False, bind=engine) as db:
+            db.add(_user)
+            db.commit()
+
+    except SQLAlchemyError as e:
+        # Обработка ошибки
+        print(f"Error creating user: {e}")
+        # Откат транзакции в случае ошибки
+        db.rollback()
+        # Дополнительные действия в зависимости от вашего кейса
+        # Например, можно возвращать сообщение об ошибке или выбрасывать исключение
+        return f"Error creating user: {e}"
+
+
+def get_user(_username, _password):
+    try:
+        with Session(autoflush=False, bind=engine) as db:
+            # Получение пользователя по имени пользователя и паролю
+            user = db.query(Users).filter(
+                and_(Users.user_name == _username, Users.password == _password)).first()
+
+        return user
+
+    except SQLAlchemyError as e:
+        # Обработка ошибки
+        print(f"Error getting user: {e}")
+        # Возвращаем None в случае ошибки
+        return None
