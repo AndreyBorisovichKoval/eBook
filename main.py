@@ -22,6 +22,6 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=15)
 jwt = JWTManager(app)
 
 app.register_blueprint(routes_app)
-
+# print('Tests')
 if __name__ == '__main__':
     app.run(debug=False, port=7000)

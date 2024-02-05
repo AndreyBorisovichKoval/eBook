@@ -135,8 +135,8 @@ class Users(Base):
     staff_id = Column(Integer, ForeignKey("staff.id"), nullable=False)
     staff = relationship("Staff", backref="users")
 
-    def __repr__(self):
-        return f"<User(id={self.id}, username={self.username}, email={self.email})>"
+    # def __repr__(self):
+    #     return f"<User(id={self.id}, user_name={self.user_name}, email={self.email})>"
 
 
 Base.metadata.create_all(bind=engine)

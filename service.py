@@ -8,9 +8,9 @@ def create_user(_user: Users):
     return repository.create_user(_user)
 
 
-def get_user(_username, _password):
+def get_user(_user_name, _password):
     password = utils.hash_string(password)
-    user = repository.get_user(_username, _password)
+    user = repository.get_user(_user_name, _password)
     if user is None:
         return None, "Incorrect username or password"
     return user.id, None
