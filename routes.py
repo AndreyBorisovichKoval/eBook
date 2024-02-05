@@ -342,9 +342,11 @@ def delete_staff(staff_id):
 @app.route('/auth/sign-up', methods=["POST"])
 def sign_up():
     data = request.get_json()
+    print(data)
     u = Users(full_name=data["full_name"],
               user_name=data["user_name"], password=data["password"])
     err = service.create_user(u)
+    # print(u)
     if err is not None:
         return {"message": err}, 400
 
