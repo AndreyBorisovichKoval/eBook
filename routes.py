@@ -416,3 +416,6 @@ def sign_in():
 #   "password": "passwordddd",
 #   "users_access_level": 1
 # }
+
+# http://127.0.0.1:7000/bookies
+# Authorization => Bearer Token => Paste Token
