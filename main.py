@@ -13,7 +13,8 @@ app = Flask(__name__)
 
 # Настройки для JWT
 # Замените на свой секретный ключ
-app.config['JWT_SECRET_KEY'] = 'your-secret-key'
+# app.config['JWT_SECRET_KEY'] = 'your-secret-key'
+app.config['JWT_SECRET_KEY'] = 'my-secret-key'
 # Алгоритм подписи (по умолчанию 'HS256')
 app.config['JWT_ALGORITHM'] = 'HS256'
 # Срок действия токена

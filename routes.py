@@ -31,12 +31,34 @@ def create_new_book():
 
 # Получение всего списка книг
 @app.route("/bookies", methods=["GET"])
+@jwt_required()
 def get_single_book_all():
+    # Получите идентификатор пользователя из токена
+    user_id = get_jwt_identity()
+    print(user_id)
+    # Получение дополнительных параметров из токена
+    claims = get_jwt()
+    print(claims["role"])
+
+    if claims["role"] != "admin":
+        # Если доступ запрещен, вернуть ошибку 401 Unauthorized
+        return jsonify(error="Access denied"), 401
+
     books = repository.get_book_all()
     if not books:
         return jsonify(error="Books not found"), 404
     else:
         return jsonify(books), 200
+
+
+# # Получение всего списка книг
+# @app.route("/bookies", methods=["GET"])
+# def get_single_book_all():
+#     books = repository.get_book_all()
+#     if not books:
+#         return jsonify(error="Books not found"), 404
+#     else:
+#         return jsonify(books), 200
 
 
 # Поиск книги по id
@@ -368,6 +390,7 @@ def sign_in():
     data = request.get_json()
     user_name = data["user_name"]
     password = data["password"]
+    # users_access_level = data["users_access_level"]
     user_id, err = service.get_user(user_name, password)
     if err is not None:
         return {"error": err}, 401
@@ -376,3 +399,20 @@ def sign_in():
     access_token = create_access_token(identity=user_id,
                                        additional_claims=additional_claims)
     return jsonify(access_token=access_token), 200
+
+
+# http://127.0.0.1:7000/auth/sign-up
+# {
+#   "full_name": "John Criss4",
+#   "user_name": "John4",
+#   "password": "passwordddd",
+#   "email": "test4@test.tj",
+#   "users_access_level": 1
+# }
+
+# http://127.0.0.1:7000/auth/sign-in
+# {
+#   "user_name": "John4",
+#   "password": "passwordddd",
+#   "users_access_level": 1
+# }
