@@ -132,8 +132,8 @@ class Users(Base):
     password = Column(String(length=255), nullable=False)
     email = Column(String(length=100), nullable=False)
     users_access_level = Column(Integer, nullable=False)
-    staff_id = Column(Integer, ForeignKey("staff.id"), nullable=False)
-    staff = relationship("Staff", backref="users")
+    # staff_id = Column(Integer, ForeignKey("staff.id"), nullable=False)
+    # staff = relationship("Staff", backref="users")
 
     # def __repr__(self):
     #     return f"<User(id={self.id}, user_name={self.user_name}, email={self.email})>"

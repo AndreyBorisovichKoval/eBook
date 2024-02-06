@@ -351,8 +351,8 @@ def sign_up():
         user_name=data["user_name"],
         password=data["password"],
         email=data["email"],
-        users_access_level=["users_access_level"],
-        staff_id=["staff_id"]
+        users_access_level=data["users_access_level"]
+        # staff_id=data["staff_id"]
     )
     # print(u)
     err = service.create_user(u)
